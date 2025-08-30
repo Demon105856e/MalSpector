@@ -28,6 +28,7 @@ set(NFD_SOURCES
 # Source files
 set(SOURCES
     main.cpp
+    pe_headers.cpp       # <-- ADDED
     ${IMGUI_SOURCES}
     ${NFD_SOURCES}
 )
