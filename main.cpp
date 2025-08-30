@@ -13,6 +13,7 @@
 
 #define NFD_THROWS_EXCEPTIONS
 #include "nativefiledialog/src/include/nfd.h"
+#include "pe_headers.h"
 
 std::string selected_file;
 GLuint file_icon_texture = 0;
@@ -57,7 +58,7 @@ void render_graph_view() {
 void render_pe_inspector() {
     ImGui::BeginTabBar("PE Tabs");
     if (ImGui::BeginTabItem("Headers")) {
-        ImGui::Text("PE Headers...");
+        render_pe_headers_tab();
         ImGui::EndTabItem();
     }
     if (ImGui::BeginTabItem("Imports")) {
@@ -112,23 +113,25 @@ void show_loaded_file_name() {
 
         if (dragging) {
             icon_pos = ImVec2(mouse.x - drag_offset.x, mouse.y - drag_offset.y);
-            icon_end = ImVec2(icon_pos.x + icon_size.x, icon_pos.y + icon_size.y); // update end
+            icon_end = ImVec2(icon_pos.x + icon_size.x, icon_pos.y + icon_size.y);
         }
 
         std::string filename = selected_file.substr(selected_file.find_last_of("/\\") + 1);
         ImVec2 text_size = ImGui::CalcTextSize(filename.c_str());
-        ImVec2 text_pos = ImVec2(icon_pos.x + (icon_size.x - text_size.x) * 0.5f, icon_end.y + 1.0f); // reduced spacing
+        ImVec2 text_pos = ImVec2(icon_pos.x + (icon_size.x - text_size.x) * 0.5f, icon_end.y + 5.0f);
         draw_list->AddText(text_pos, IM_COL32(255, 255, 255, 255), filename.c_str());
     }
 }
-
 
 void show_menu_bar() {
     if (ImGui::BeginMainMenuBar()) {
         if (ImGui::BeginMenu("File")) {
             if (ImGui::MenuItem("Open")) {
                 std::string path = open_file_dialog();
-                if (!path.empty()) selected_file = path;
+                if (!path.empty()) {
+                    selected_file = path;
+                    parse_pe_headers(path);
+                }
             }
             if (ImGui::MenuItem("Exit")) {
                 SDL_Event ev;
