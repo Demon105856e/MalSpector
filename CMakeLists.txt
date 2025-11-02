@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(malware_gui)
+project(MalSpector)
 
 if(POLICY CMP0072)
     cmake_policy(SET CMP0072 NEW)
@@ -63,10 +63,10 @@ include_directories(
 )
 
 # Executable
-add_executable(malware_gui ${SOURCES})
+add_executable(MalSpector ${SOURCES})
 
 # Link libraries
-target_link_libraries(malware_gui
+target_link_libraries(MalSpector
     ${SDL2_LIBRARIES}
     ${GTK3_LIBRARIES}
     ${CAPSTONE_LIBRARIES}
