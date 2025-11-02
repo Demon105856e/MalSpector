@@ -21,9 +21,6 @@ echo "---------------------------------"
 # --- 2. Clone Required Libraries ---
 echo "📦 Cloning external libraries..."
 # Create 'external' directory if it doesn't exist
-mkdir -p external
-cd external
-
 # Clone ImGui (with docking branch)
 if [ ! -d "imgui" ]; then
     git clone https://github.com/ocornut/imgui.git
