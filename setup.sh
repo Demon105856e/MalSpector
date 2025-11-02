@@ -65,14 +65,9 @@ echo "---------------------------------"
 # --- 3. Build the Project ---
 echo "🚀 Building MalSpector..."
 # Create build directory
-mkdir -p build
-cd build
-
-# Run CMake from within the build directory
+mkdir build && cd build
 cmake ..
-
-# Compile the project
-make -j$(nproc)
+make -j4
 
 echo "---------------------------------"
 echo "✅ Build complete!"
