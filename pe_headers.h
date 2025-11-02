@@ -13,6 +13,12 @@ struct SectionInfo {
     uint32_t rawDataPtr;
 };
 
+// NEW: Structure to hold import data
+struct ImportInfo {
+    std::string dll_name;
+    std::vector<std::string> function_names;
+};
+
 struct PEHeadersInfo {
     uint16_t machine;
     uint16_t numberOfSections;
@@ -25,6 +31,7 @@ struct PEHeadersInfo {
     uint32_t sectionAlignment;
     uint32_t fileAlignment;
     std::vector<SectionInfo> sections;
+    std::vector<ImportInfo> imports; // <-- ADDED
 };
 
 class PEParser {
@@ -36,6 +43,8 @@ private:
     std::vector<uint8_t> data;
     PEHeadersInfo info;
     bool parse();
+    bool parse_imports(); // <-- ADDED
+    uint32_t RvaToOffset(uint32_t rva); // <-- ADDED
     void clear();
 };
 
@@ -45,5 +54,6 @@ extern PEHeadersInfo peInfo;
 // Functions matching your main.cpp references
 bool parse_pe_headers(const std::string& file_path);  // used in menu bar
 void render_pe_headers_tab();                         // used in PE tab
+void render_pe_imports_tab();                         // <-- ADDED
 
 #endif // PE_HEADERS_H
